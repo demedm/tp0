@@ -15,21 +15,20 @@ int main(void)
 	/* ---------------- LOGGING ---------------- */
 
 	logger = iniciar_logger();
-	log_create("tp0.log","cliente",true, LOG_LEVEL_INFO);
-	log_info(logger,"Hola! Soy un log");
+	//logger = log_create("tp0.log","cliente.logger",true, LOG_LEVEL_INFO);
+	//agregado dentro de la funcion iniciar logger para poder indicar si hay error al crearlo
+	log_info(logger,"Soy un log");
 	// Usando el logger creado previamente
 	// Escribi: "Hola! Soy un log"
-	//	OK
+	//	OK, corregido
 
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 
 	config = iniciar_config();
-	config_create("../cliente.config"); 
-	config_has_property(config,"CLAVE");
-	if (config==NULL)
-	{
-		fprintf("No se pudo crear el config");
-	}
+	//config = config_create("../cliente.config"); 
+	//config_create agregado al final del archivo para detectar errores al crearlo
+	//ip = config_get_string_value(config,)
+
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
 
@@ -60,15 +59,21 @@ int main(void)
 
 t_log* iniciar_logger(void)
 {
-	t_log* nuevo_logger;
-
+	t_log* nuevo_logger = log_create("cliente.log","log_create_cliente",true,LOG_LEVEL_INFO);
+	if (nuevo_logger==NULL){
+		perror("No se pudo crear el log.");
+		exit(EXIT_FAILURE);
+	}
 	return nuevo_logger;
 }
 
 t_config* iniciar_config(void)
 {
-	t_config* nuevo_config;
-
+	t_config* nuevo_config = config_create("cliente.config");
+	if(nuevo_config==NULL){
+		perror("No se pudo crear el config");
+		exit(EXIT_FAILURE);
+	}
 	return nuevo_config;
 }
 
@@ -103,6 +108,5 @@ void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
 	log_destroy(logger);
 	config_destroy(config);
-	/* Y por ultimo, hay que liberar lo que utilizamos (conexion, log y config) 
-	  con las funciones de las commons y del TP mencionadas en el enunciado */
+	
 }
