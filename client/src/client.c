@@ -27,13 +27,13 @@ int main(void)
 	config = iniciar_config();
 	//config = config_create("../cliente.config"); 
 	//config_create agregado al final del archivo para detectar errores al crearlo
-	//ip = config_get_string_value(config,)
-
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
-
+	ip = config_get_string_value(config,"IP");
+	puerto = config_get_string_value(config,"PUERTO");
+	valor = config_get_string_value(config,"CLAVE");
 	// Loggeamos el valor de config
-
+	log_info(logger,"Valor leido de config: %s",valor);
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
