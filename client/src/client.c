@@ -48,9 +48,12 @@ int main(void)
 	conexion = crear_conexion(ip, puerto);
 
 	// Enviamos al servidor el valor de CLAVE como mensaje
+	enviar_mensaje(valor,conexion);
 
 	// Armamos y enviamos el paquete
-	paquete(conexion);
+	/*paquete(conexion);
+	enviar_paquete(paquete,conexion);
+	printf(">> CLIENTE CERRADO");*/
 
 	terminar_programa(conexion, logger, config);
 
@@ -85,12 +88,14 @@ void leer_consola(t_log* logger)
 	// La primera te la dejo de yapa
 	leido = readline("> ");
 	log_info(logger,">> %s", leido); 
+
 	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
-	while(strngcmp(leido,"")!=0){
+	while(strcmp(leido,"")!=0){
 		free(leido);
 		leido = readline("> ");
 		log_info(logger,">> %s",leido);
 	}
+
 	// ¡No te olvides de liberar las lineas antes de regresar!
 	free(leido);
 }
@@ -102,9 +107,13 @@ void paquete(int conexion)
 	t_paquete* paquete;
 
 	// Leemos y esta vez agregamos las lineas al paquete
-
+	/*leido = leer_consola(logger);
+	paquete = crear_paquete();
+	agregar_a_paquete(paquete,leido,conexion);
 
 	// ¡No te olvides de liberar las líneas y el paquete antes de regresar!
+	free(leido);
+	free(paquete);*/
 	
 }
 

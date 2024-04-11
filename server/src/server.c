@@ -27,6 +27,8 @@ int main(void) {
 			break;
 		}
 	}
+	printf(">> SERVIDOR CERRADO");
+
 	return EXIT_SUCCESS;
 }
 
