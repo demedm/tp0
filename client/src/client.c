@@ -85,6 +85,11 @@ void leer_consola(t_log* logger)
 	leido = readline("> ");
 	log_info(logger,">> %s", leido); 
 	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
+	while(strngcmp(leido,"")!=0){
+		free(leido);
+		leido = readline("> ");
+		log_info(logger,">> %s",leido);
+	}
 	// ¡No te olvides de liberar las lineas antes de regresar!
 	free(leido);
 }
