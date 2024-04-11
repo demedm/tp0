@@ -50,10 +50,9 @@ int main(void)
 	// Enviamos al servidor el valor de CLAVE como mensaje
 	enviar_mensaje(valor,conexion);
 
-	// Armamos y enviamos el paquete
-	/*paquete(conexion);
-	enviar_paquete(paquete,conexion);
-	printf(">> CLIENTE CERRADO");*/
+	// Armamos y enviamos el paquete (dentro de la funcion paquete)
+	paquete(conexion);
+	printf(">> CLIENTE CERRADO");
 
 	terminar_programa(conexion, logger, config);
 
@@ -103,17 +102,25 @@ void leer_consola(t_log* logger)
 void paquete(int conexion)
 {
 	// Ahora toca lo divertido!
-	char* leido;
+	char* leido = readline("> ");
 	t_paquete* paquete;
 
 	// Leemos y esta vez agregamos las lineas al paquete
-	/*leido = leer_consola(logger);
 	paquete = crear_paquete();
-	agregar_a_paquete(paquete,leido,conexion);
+	while(strcmp(leido,"")!=0){
+		agregar_a_paquete(paquete, leido, strlen(leido)+1); //string length + 1 (caract vacio)
+		free(leido);
+		leido = readline("> ");
+	}
 
 	// ¡No te olvides de liberar las líneas y el paquete antes de regresar!
 	free(leido);
-	free(paquete);*/
+
+	//enviado de PAQUETE		
+	enviar_paquete(paquete,conexion); 
+	//el paquete se debe enviar dentro de la funcion
+
+	eliminar_paquete(paquete);
 	
 }
 
@@ -121,5 +128,5 @@ void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
 	log_destroy(logger);
 	config_destroy(config);
-	
+	liberar_conexion(conexion);
 }
